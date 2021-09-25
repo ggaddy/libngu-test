@@ -11,8 +11,7 @@ RUN cd /tmp && git clone https://github.com/switck/libngu.git
 RUN python -m pip install -r /tmp/libngu/requirements.txt
 
 # install submodules
-RUN cd /tmp/libngu/libs/cifra && git submodule update --init .
-RUN cd /tmp/libngu/libs/secp256k1 && git submodule update --init .
+RUN for d in /tmp/libngu/libs/* ; do cd $d && git submodule update --init . ; done
 
 # make libngu
 RUN cd /tmp/libngu && make min-one-time
