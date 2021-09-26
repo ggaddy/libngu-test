@@ -1,8 +1,8 @@
 FROM registry.fedoraproject.org/fedora-minimal:34
 
-# prepare dependencies
-RUN microdnf -y update && microdnf -y upgrade && microdnf -y clean all
-RUN microdnf -y install git libffi-devel make automake libtool valgrind-devel openssl-devel && microdnf -y clean all
+# prepare dependencies and cleanup after to keep image small
+RUN microdnf -y update && microdnf -y upgrade && microdnf clean all && rm -rf /var/cache/yum
+RUN microdnf -y install git libffi-devel make automake libtool valgrind-devel openssl-devel && microdnf clean all && rm -rf /var/cache/yum
 
 # clone libngu from source
 RUN cd /tmp && git clone https://github.com/switck/libngu.git
